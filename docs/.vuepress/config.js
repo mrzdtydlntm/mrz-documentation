@@ -9,7 +9,7 @@ export default defineUserConfig({
   description: "My Documentation",
 
   theme: defaultTheme({
-    logo: "https://vuejs.press/images/hero.png",
+    logo: "https://cdn-icons-png.flaticon.com/512/1048/1048927.png",
 
     navbar: ["/", "/deploy-vm", "/cert-vm", "/metrics"],
   }),
