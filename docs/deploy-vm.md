@@ -3,7 +3,6 @@
 How to deploy some tech stack in virtual machine
 
 ## Deploy Laravel
-
 1. Get in into root user
 ```bash
 sudo su
@@ -118,6 +117,72 @@ nginx -t
 19. Reload the nginx
 ```bash
 nginx -s reload
+```
+
+## Deploy Wordpress MySQL and NGINX
+1. Install common software
+```bash
+sudo apt-get update
+sudo apt -y install software-properties-common
+```
+2. Install NGINX
+```bash
+sudo apt install nginx -y
+```
+3. Add PHP Repository
+```bash
+sudo add-apt-repository ppa:ondrej/php
+```
+4. Install PHP and basic extension
+```bash
+sudo apt install php8.2 php8.2-fpm php8.2-common php8.2-gmp php8.2-curl php8.2-intl php8.2-mbstring php8.2-xmlrpc php8.2-gd php8.2-xml php8.2-cli php8.2-zip php8.2-mysql
+```
+5. Purge Apache Web Server
+```bash
+sudo apt purge apache2
+```
+6. Download and unzip wordpress latest
+```bash
+wget https://wordpress.org/latest.tar.gz
+tar -xvzf latest.tar.gz
+```
+7. Move to NGINX folder
+```bash
+sudo mv wordpress /var/www && cd /var/www/<folder-name>
+```
+8. Install MySQL or MariaDB
+```bash
+sudo apt install mariadb-server # MariaDB
+sudo apt install mysql-server # MySQL
+```
+9. Secure install MySQL
+```bash
+mysql_secure_installation
+```
+10. Create wordpress database
+```bash
+mysql -u root
+```
+```sql
+CREATE DATABASE <db-name>;
+CREATE USER '<user-name>'@'localhost' IDENTIFIED BY '<password>';
+GRANT ALL ON <db-name>.* TO '<user-name>'@'localhost' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+EXIT;
+```
+11. Configure `wp-config.php`
+```bash
+sudo cp wp-config-sample.php wp-config.php
+sudo vim wp-config.php
+```
+12. Change owner wordpress folder
+```bash
+sudo chown -R www-data:www-data /var/www/<folder-name>
+```
+13. Change mode wordpress folder
+```bash
+sudo find . -type d -exec chmod 755 {} \;
+sudo find . -type f -exec chmod 644 {} \;
 ```
 
 ## Deploy NodeJS using Node Version Manager (NVM)
